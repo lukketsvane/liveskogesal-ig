@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import type React from "react"
+
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Menu, X, ChevronLeft, ChevronRight, Search } from "lucide-react"
 
@@ -8,6 +10,12 @@ export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [showDetails, setShowDetails] = useState(false)
+
+  const touchStartX = useRef<number>(0)
+  const touchStartY = useRef<number>(0)
+  const touchEndX = useRef<number>(0)
+  const touchEndY = useRef<number>(0)
+  const minSwipeDistance = 50
 
   const artworks = [
     {
@@ -97,6 +105,63 @@ export default function Portfolio() {
   const toggleDetails = () => {
     setShowDetails(!showDetails)
   }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX
+    touchStartY.current = e.targetTouches[0].clientY
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX
+    touchEndY.current = e.targetTouches[0].clientY
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+
+    const distanceX = touchStartX.current - touchEndX.current
+    const distanceY = touchStartY.current - touchEndY.current
+    const isLeftSwipe = distanceX > minSwipeDistance
+    const isRightSwipe = distanceX < -minSwipeDistance
+    const isVerticalSwipe = Math.abs(distanceY) > Math.abs(distanceX)
+
+    // Only handle horizontal swipes, ignore vertical ones
+    if (!isVerticalSwipe) {
+      if (isLeftSwipe && selectedImage !== null) {
+        nextImage()
+      }
+      if (isRightSwipe && selectedImage !== null) {
+        prevImage()
+      }
+    }
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage === null) return
+
+      switch (e.key) {
+        case "ArrowLeft":
+          prevImage()
+          break
+        case "ArrowRight":
+          nextImage()
+          break
+        case "Escape":
+          closeLightbox()
+          break
+        case " ":
+          e.preventDefault()
+          if (artworks[selectedImage].detailImage) {
+            toggleDetails()
+          }
+          break
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [selectedImage, showDetails])
 
   return (
     <div className="min-h-screen bg-background">
@@ -391,46 +456,52 @@ export default function Portfolio() {
       </main>
 
       {selectedImage !== null && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center">
+        <div
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
               <button
                 onClick={prevImage}
-                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
+                className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Previous image"
               >
-                <ChevronLeft size={18} className="md:w-5 md:h-5" />
+                <ChevronLeft size={20} className="md:w-5 md:h-5" />
               </button>
               <button
                 onClick={nextImage}
-                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
+                className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Next image"
               >
-                <ChevronRight size={18} className="md:w-5 md:h-5" />
+                <ChevronRight size={20} className="md:w-5 md:h-5" />
               </button>
             </div>
 
             <div className="flex items-center gap-2">
-              {artworks[selectedImage].detailImage && (
-                <button
-                  onClick={toggleDetails}
-                  className={`p-2 md:p-3 rounded-full transition-all duration-200 touch-manipulation md:relative absolute bottom-4 right-16 md:bottom-auto md:right-auto ${
-                    showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
-                  }`}
-                  aria-label={showDetails ? "Show main image" : "Show detail"}
-                >
-                  <Search size={16} className="md:w-[18px] md:h-[18px]" />
-                </button>
-              )}
               <button
                 onClick={closeLightbox}
-                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
+                className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Close"
               >
-                <X size={18} className="md:w-5 md:h-5" />
+                <X size={20} className="md:w-5 md:h-5" />
               </button>
             </div>
           </div>
+
+          {artworks[selectedImage].detailImage && (
+            <button
+              onClick={toggleDetails}
+              className={`fixed bottom-6 right-6 md:absolute md:top-4 md:right-20 md:bottom-auto p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center z-20 ${
+                showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
+              }`}
+              aria-label={showDetails ? "Show main image" : "Show detail"}
+            >
+              <Search size={18} />
+            </button>
+          )}
 
           <div className="w-full h-full flex items-center justify-center p-4 md:p-20">
             <div className="relative max-w-full max-h-full">
@@ -455,35 +526,29 @@ export default function Portfolio() {
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 md:p-6">
-            <div className="max-w-4xl mx-auto text-left md:text-center">
-              <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left md:text-center">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left">
                 {artworks[selectedImage].title}
               </h3>
-              <div className="flex flex-col md:flex-row md:justify-center md:items-center gap-1 md:gap-3 text-sm text-white/80 font-light mb-2">
+              <div className="flex flex-col gap-1 text-sm text-white/80 font-light mb-2">
                 <span>{artworks[selectedImage].year}</span>
-                {artworks[selectedImage].dimensions && (
-                  <>
-                    <span className="hidden md:inline text-white/40">•</span>
-                    <span>{artworks[selectedImage].dimensions}</span>
-                  </>
-                )}
-                {artworks[selectedImage].photographer && (
-                  <>
-                    <span className="hidden md:inline text-white/40">•</span>
-                    <span>Foto: {artworks[selectedImage].photographer}</span>
-                  </>
-                )}
+                {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
+                {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
               </div>
               {artworks[selectedImage].materials && (
-                <p className="text-white/70 text-sm font-light mb-1 text-left md:text-center">
-                  {artworks[selectedImage].materials}
-                </p>
+                <p className="text-white/70 text-sm font-light mb-1 text-left">{artworks[selectedImage].materials}</p>
               )}
               {artworks[selectedImage].description && (
-                <p className="text-white/60 text-sm font-light text-left md:text-center">
-                  {artworks[selectedImage].description}
-                </p>
+                <p className="text-white/60 text-sm font-light text-left">{artworks[selectedImage].description}</p>
               )}
+            </div>
+          </div>
+
+          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 md:hidden">
+            <div className="flex items-center gap-2 text-white/40 text-xs">
+              <ChevronLeft size={12} />
+              <span>Sveip for å navigere</span>
+              <ChevronRight size={12} />
             </div>
           </div>
         </div>
