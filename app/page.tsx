@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Menu, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, Search } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -33,16 +33,6 @@ export default function Portfolio() {
       aspectRatio: "1/1",
     },
     {
-      id: 3,
-      title: "Du som bur meg i hjarta inne magti fekk yvi alt mitt minne",
-      year: "2024",
-      dimensions: "105x119 cm",
-      materials: "Plantefarget og håndfarget garn, nylon og lin",
-      photographer: "Øystein Thorvaldsen",
-      image: "/images/som-bur-meg-gallery.jpeg",
-      aspectRatio: "4/5",
-    },
-    {
       id: 4,
       title: "Vinternatt i rondane",
       year: "2024",
@@ -62,7 +52,7 @@ export default function Portfolio() {
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
       description: "Billedveven er inspirert av Theodor Kittelsen og hans nøkkel",
-      image: "/images/vannliljer-new.png",
+      image: "/images/vannliljer.png",
       detailImage: "/images/detalj-vannlilje.png",
       aspectRatio: "1/1",
     },
@@ -75,15 +65,6 @@ export default function Portfolio() {
       image: "/images/kyss-meg.jpeg",
       detailImage: "/images/detalj-kyss-meg.png",
       aspectRatio: "1/1",
-    },
-    {
-      id: 7,
-      title: "Frosk",
-      year: "2024",
-      dimensions: "Ukjent størrelse",
-      materials: "Plantefarget og håndfarget garn, nylon og lin",
-      image: "/images/frosk.png",
-      aspectRatio: "4/5",
     },
   ]
 
@@ -214,16 +195,10 @@ export default function Portfolio() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center">
-                        <ZoomIn
+                        <Search
                           className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
                           size={24}
                         />
-                        {artwork.detailImage && (
-                          <ZoomIn
-                            className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
-                            size={24}
-                          />
-                        )}
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
@@ -424,10 +399,10 @@ export default function Portfolio() {
               <button
                 onClick={toggleDetails}
                 className={`absolute top-6 right-20 z-10 p-2 transition-all duration-200 ${
-                  showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white"
+                  showDetails ? "text-primary" : "text-white/80 hover:text-white"
                 }`}
               >
-                <ZoomIn size={24} />
+                <Search size={24} />
               </button>
             )}
 
@@ -497,7 +472,7 @@ export default function Portfolio() {
             </div>
 
             {/* Image info - separate section below images */}
-            <div className="flex-shrink-0 px-6 pb-6 text-center border-t border-white/10">
+            <div className="absolute bottom-6 left-6 right-6 flex-shrink-0 px-6 pb-6 text-center border-t border-white/10">
               <h3 className="text-white text-lg font-light mb-2">{artworks[selectedImage].title}</h3>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80 font-light">
                 <span>{artworks[selectedImage].year}</span>
@@ -511,9 +486,6 @@ export default function Portfolio() {
                 <p className="text-white/70 text-sm font-light mt-2 max-w-2xl mx-auto">
                   {artworks[selectedImage].description}
                 </p>
-              )}
-              {showDetails && artworks[selectedImage].detailImage && (
-                <p className="text-primary/80 text-xs font-light mt-2">Viser detalj av vevarbeidet</p>
               )}
             </div>
           </div>
