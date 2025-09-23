@@ -2,10 +2,11 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
   const artworks = [
     {
@@ -15,7 +16,8 @@ export default function Portfolio() {
       dimensions: "140x170 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Vegard Kleven",
-      image: "/images/tapestry-1.png",
+      image: "/images/slik-hjorten.jpeg",
+      aspectRatio: "4/5", // Portrait
     },
     {
       id: 2,
@@ -25,6 +27,7 @@ export default function Portfolio() {
       materials: "Plantefarget garn, håndfarget garn, lin og nylon",
       photographer: "Øystein Thorvaldsen",
       image: "/images/eg-droymer.png",
+      aspectRatio: "1/1", // Square
     },
     {
       id: 3,
@@ -34,6 +37,7 @@ export default function Portfolio() {
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
       image: "/images/som-bur-meg-gallery.jpeg",
+      aspectRatio: "4/5", // Portrait
     },
     {
       id: 4,
@@ -43,7 +47,8 @@ export default function Portfolio() {
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
       description: 'Billedveven er en studie av Harald Sohlbergs "Vinternatt i Rondane"',
-      image: "/images/vinternatt.png",
+      image: "/images/vinternatt-rondane.jpeg",
+      aspectRatio: "1/1", // Square
     },
     {
       id: 5,
@@ -54,6 +59,7 @@ export default function Portfolio() {
       photographer: "Øystein Thorvaldsen",
       description: "Billedveven er inspirert av Theodor Kittelsen og hans nøkken",
       image: "/images/vannliljer-new.png",
+      aspectRatio: "1/1", // Square
     },
     {
       id: 6,
@@ -62,6 +68,7 @@ export default function Portfolio() {
       dimensions: "58x56 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       image: "/images/kyss-meg.jpeg",
+      aspectRatio: "1/1", // Square
     },
     {
       id: 7,
@@ -69,6 +76,7 @@ export default function Portfolio() {
       year: "2024",
       materials: "Plantefarget og håndfarget garn",
       image: "/images/detail-1.jpeg",
+      aspectRatio: "3/2", // Landscape
     },
     {
       id: 8,
@@ -76,6 +84,7 @@ export default function Portfolio() {
       year: "2024",
       materials: "Plantefarget og håndfarget garn",
       image: "/images/textile-detail-colorful.jpeg",
+      aspectRatio: "3/2", // Landscape
     },
     {
       id: 9,
@@ -83,6 +92,7 @@ export default function Portfolio() {
       year: "2024",
       materials: "Plantefarget og håndfarget garn",
       image: "/images/textile-detail-blue.jpeg",
+      aspectRatio: "3/2", // Landscape
     },
     {
       id: 10,
@@ -90,8 +100,31 @@ export default function Portfolio() {
       year: "2024",
       materials: "Plantefarget og håndfarget garn",
       image: "/images/hands-weaving.jpeg",
+      aspectRatio: "3/2", // Landscape
     },
   ]
+
+  const openLightbox = (index: number) => {
+    setSelectedImage(index)
+    document.body.style.overflow = "hidden"
+  }
+
+  const closeLightbox = () => {
+    setSelectedImage(null)
+    document.body.style.overflow = "unset"
+  }
+
+  const nextImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage((selectedImage + 1) % artworks.length)
+    }
+  }
+
+  const prevImage = () => {
+    if (selectedImage !== null) {
+      setSelectedImage(selectedImage === 0 ? artworks.length - 1 : selectedImage - 1)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -172,23 +205,41 @@ export default function Portfolio() {
       <main className="pt-24">
         <section id="prosjekter" className="px-6 py-16">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {artworks.map((artwork) => (
-                <div key={artwork.id} className="group cursor-pointer">
-                  <div className="relative aspect-square bg-muted rounded-sm overflow-hidden">
-                    <Image
-                      src={artwork.image || "/placeholder.svg"}
-                      alt={artwork.title}
-                      fill
-                      className="object-cover transition-all duration-500 ease-out group-hover:scale-105"
-                    />
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+              {artworks.map((artwork, index) => (
+                <div
+                  key={artwork.id}
+                  className="group cursor-pointer break-inside-avoid mb-8"
+                  onClick={() => openLightbox(index)}
+                >
+                  <div className="relative overflow-hidden rounded-sm bg-muted transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-primary/10">
+                    <div className="relative w-full" style={{ aspectRatio: artwork.aspectRatio }}>
+                      <Image
+                        src={artwork.image || "/placeholder.svg"}
+                        alt={artwork.title}
+                        fill
+                        className="object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center">
+                        <ZoomIn
+                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
+                          size={24}
+                        />
+                      </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
+                      <h3 className="text-white text-sm font-light line-clamp-2 leading-relaxed mb-1">
+                        {artwork.title}
+                      </h3>
+                      <p className="text-white/80 text-xs font-light">{artwork.year}</p>
+                      {artwork.dimensions && <p className="text-white/60 text-xs font-light">{artwork.dimensions}</p>}
+                    </div>
                   </div>
                   <div className="mt-4 space-y-1">
                     <h3 className="text-sm font-light text-foreground line-clamp-2 leading-relaxed">{artwork.title}</h3>
                     <p className="text-xs text-muted-foreground font-light">{artwork.year}</p>
-                    {artwork.dimensions && (
-                      <p className="text-xs text-muted-foreground/70 font-light">{artwork.dimensions}</p>
-                    )}
                   </div>
                 </div>
               ))}
@@ -359,6 +410,66 @@ export default function Portfolio() {
           </div>
         </footer>
       </main>
+
+      {selectedImage !== null && (
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 right-6 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Navigation buttons */}
+            <button
+              onClick={prevImage}
+              className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+            >
+              <ChevronLeft size={32} />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+            >
+              <ChevronRight size={32} />
+            </button>
+
+            {/* Image container */}
+            <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
+              <div
+                className="relative w-full h-full max-w-full max-h-full"
+                style={{ aspectRatio: artworks[selectedImage].aspectRatio }}
+              >
+                <Image
+                  src={artworks[selectedImage].image || "/placeholder.svg"}
+                  alt={artworks[selectedImage].title}
+                  fill
+                  className="object-contain"
+                  sizes="90vw"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Image info */}
+            <div className="absolute bottom-6 left-6 right-6 text-center">
+              <h3 className="text-white text-lg font-light mb-2">{artworks[selectedImage].title}</h3>
+              <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80 font-light">
+                <span>{artworks[selectedImage].year}</span>
+                {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
+                {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
+              </div>
+              {artworks[selectedImage].description && (
+                <p className="text-white/70 text-sm font-light mt-2 max-w-2xl mx-auto">
+                  {artworks[selectedImage].description}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
