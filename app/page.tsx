@@ -194,24 +194,28 @@ export default function Portfolio() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center md:flex md:items-center md:justify-center">
                         <Search
-                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
-                          size={24}
+                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100 md:relative absolute bottom-4 right-4 md:bottom-auto md:right-auto"
+                          size={20}
                         />
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
-                      <h3 className="text-white text-sm font-light line-clamp-2 leading-relaxed mb-1">
+                      <h3 className="text-white text-sm font-light line-clamp-2 leading-relaxed mb-1 text-left">
                         {artwork.title}
                       </h3>
-                      <p className="text-white/80 text-xs font-light">{artwork.year}</p>
-                      {artwork.dimensions && <p className="text-white/60 text-xs font-light">{artwork.dimensions}</p>}
+                      <p className="text-white/80 text-xs font-light text-left">{artwork.year}</p>
+                      {artwork.dimensions && (
+                        <p className="text-white/60 text-xs font-light text-left">{artwork.dimensions}</p>
+                      )}
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
-                    <h3 className="text-sm font-light text-foreground line-clamp-2 leading-relaxed">{artwork.title}</h3>
-                    <p className="text-xs text-muted-foreground font-light">{artwork.year}</p>
+                    <h3 className="text-sm font-light text-foreground line-clamp-2 leading-relaxed text-left">
+                      {artwork.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground font-light text-left">{artwork.year}</p>
                   </div>
                 </div>
               ))}
@@ -274,12 +278,12 @@ export default function Portfolio() {
 
         <section id="cv" className="px-6 py-16 bg-secondary/30">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide">CV</h2>
+            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide text-left">CV</h2>
 
             <div className="grid md:grid-cols-2 gap-16">
               <div className="space-y-12">
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide">Utdannelse</h3>
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">Utdannelse</h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-light text-foreground">Bachelor i Kunst</p>
@@ -297,7 +301,9 @@ export default function Portfolio() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide">Utmerkelser og stipend</h3>
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                    Utmerkelser og stipend
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-light text-foreground">"Årets beste kunstopplevelser 2024"</p>
@@ -320,7 +326,9 @@ export default function Portfolio() {
 
               <div className="space-y-12">
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide">Kommende utstillinger</h3>
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                    Kommende utstillinger
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-light text-foreground">Visningsrommet USF (separatutstilling)</p>
@@ -342,7 +350,9 @@ export default function Portfolio() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide">Utvalgte utstillinger</h3>
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                    Utvalgte utstillinger
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-light text-foreground">Høstutstillingen</p>
@@ -382,22 +392,21 @@ export default function Portfolio() {
 
       {selectedImage !== null && (
         <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center">
-          {/* Navigation and controls */}
           <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
             <div className="flex items-center gap-2">
               <button
                 onClick={prevImage}
-                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
                 aria-label="Previous image"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={18} className="md:w-5 md:h-5" />
               </button>
               <button
                 onClick={nextImage}
-                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
                 aria-label="Next image"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={18} className="md:w-5 md:h-5" />
               </button>
             </div>
 
@@ -405,26 +414,25 @@ export default function Portfolio() {
               {artworks[selectedImage].detailImage && (
                 <button
                   onClick={toggleDetails}
-                  className={`p-3 rounded-full transition-all duration-200 ${
+                  className={`p-2 md:p-3 rounded-full transition-all duration-200 touch-manipulation md:relative absolute bottom-4 right-16 md:bottom-auto md:right-auto ${
                     showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
                   }`}
                   aria-label={showDetails ? "Show main image" : "Show detail"}
                 >
-                  <Search size={18} />
+                  <Search size={16} className="md:w-[18px] md:h-[18px]" />
                 </button>
               )}
               <button
                 onClick={closeLightbox}
-                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                className="p-2 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation"
                 aria-label="Close"
               >
-                <X size={20} />
+                <X size={18} className="md:w-5 md:h-5" />
               </button>
             </div>
           </div>
 
-          {/* Main image container */}
-          <div className="w-full h-full flex items-center justify-center p-20">
+          <div className="w-full h-full flex items-center justify-center p-4 md:p-20">
             <div className="relative max-w-full max-h-full">
               <Image
                 src={
@@ -446,30 +454,35 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Info panel */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
-            <div className="max-w-4xl mx-auto text-center">
-              <h3 className="text-white text-lg font-light mb-2 leading-tight">{artworks[selectedImage].title}</h3>
-              <div className="flex flex-wrap justify-center items-center gap-3 text-sm text-white/80 font-light mb-2">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 md:p-6">
+            <div className="max-w-4xl mx-auto text-left md:text-center">
+              <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left md:text-center">
+                {artworks[selectedImage].title}
+              </h3>
+              <div className="flex flex-col md:flex-row md:justify-center md:items-center gap-1 md:gap-3 text-sm text-white/80 font-light mb-2">
                 <span>{artworks[selectedImage].year}</span>
                 {artworks[selectedImage].dimensions && (
                   <>
-                    <span className="text-white/40">•</span>
+                    <span className="hidden md:inline text-white/40">•</span>
                     <span>{artworks[selectedImage].dimensions}</span>
                   </>
                 )}
                 {artworks[selectedImage].photographer && (
                   <>
-                    <span className="text-white/40">•</span>
+                    <span className="hidden md:inline text-white/40">•</span>
                     <span>Foto: {artworks[selectedImage].photographer}</span>
                   </>
                 )}
               </div>
               {artworks[selectedImage].materials && (
-                <p className="text-white/70 text-sm font-light mb-1">{artworks[selectedImage].materials}</p>
+                <p className="text-white/70 text-sm font-light mb-1 text-left md:text-center">
+                  {artworks[selectedImage].materials}
+                </p>
               )}
               {artworks[selectedImage].description && (
-                <p className="text-white/60 text-sm font-light">{artworks[selectedImage].description}</p>
+                <p className="text-white/60 text-sm font-light text-left md:text-center">
+                  {artworks[selectedImage].description}
+                </p>
               )}
             </div>
           </div>
