@@ -28,8 +28,8 @@ export default function Portfolio() {
       dimensions: "112 x 101 cm",
       materials: "Plantefarget garn, håndfarget garn, lin og nylon",
       photographer: "Øystein Thorvaldsen",
-      image: "/images/eg-droymer.png",
-      detailImage: "/images/detalj-egdroymer.png",
+      image: "/images/eg-droymer-meg-bort.png",
+      detailImage: "/images/detalj-eg-droymer-meg-bort.jpeg",
       aspectRatio: "1/1",
     },
     {
@@ -207,9 +207,6 @@ export default function Portfolio() {
                       </h3>
                       <p className="text-white/80 text-xs font-light">{artwork.year}</p>
                       {artwork.dimensions && <p className="text-white/60 text-xs font-light">{artwork.dimensions}</p>}
-                      {artwork.detailImage && (
-                        <p className="text-white/60 text-xs font-light mt-1">Klikk for å se detaljer</p>
-                      )}
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
@@ -384,108 +381,95 @@ export default function Portfolio() {
       </main>
 
       {selectedImage !== null && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm">
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            {/* Close button */}
-            <button
-              onClick={closeLightbox}
-              className="absolute top-6 right-6 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
-            >
-              <X size={24} />
-            </button>
-
-            {/* Detail toggle button - only show if artwork has detail image */}
-            {artworks[selectedImage].detailImage && (
-              <button
-                onClick={toggleDetails}
-                className={`absolute top-6 right-20 z-10 p-2 transition-all duration-200 ${
-                  showDetails ? "text-primary" : "text-white/80 hover:text-white"
-                }`}
-              >
-                <Search size={24} />
-              </button>
-            )}
-
-            {/* Image container - takes remaining space */}
-            <div className="flex-1 flex items-center justify-center px-6 pb-6 min-h-0">
-              {/* Navigation buttons */}
+        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center">
+          {/* Navigation and controls */}
+          <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+            <div className="flex items-center gap-2">
               <button
                 onClick={prevImage}
-                className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                aria-label="Previous image"
               >
-                <ChevronLeft size={32} />
+                <ChevronLeft size={20} />
               </button>
               <button
                 onClick={nextImage}
-                className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                aria-label="Next image"
               >
-                <ChevronRight size={32} />
+                <ChevronRight size={20} />
               </button>
-
-              {/* Image display area */}
-              <div className="relative max-w-full max-h-full w-full h-full flex items-center justify-center">
-                {showDetails && artworks[selectedImage].detailImage ? (
-                  // Split view: main artwork and detail side by side
-                  <div className="flex gap-4 w-full h-full max-w-full max-h-full">
-                    <div className="flex-1 relative min-h-0">
-                      <div
-                        className="relative w-full h-full"
-                        style={{ aspectRatio: artworks[selectedImage].aspectRatio }}
-                      >
-                        <Image
-                          src={artworks[selectedImage].image || "/placeholder.svg"}
-                          alt={artworks[selectedImage].title}
-                          fill
-                          className="object-contain"
-                          sizes="45vw"
-                          priority
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1 relative min-h-0">
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={artworks[selectedImage].detailImage || "/placeholder.svg"}
-                          alt={`${artworks[selectedImage].title} - Detail`}
-                          fill
-                          className="object-contain"
-                          sizes="45vw"
-                          priority
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  // Single view: main artwork only
-                  <div className="relative w-full h-full" style={{ aspectRatio: artworks[selectedImage].aspectRatio }}>
-                    <Image
-                      src={artworks[selectedImage].image || "/placeholder.svg"}
-                      alt={artworks[selectedImage].title}
-                      fill
-                      className="object-contain"
-                      sizes="90vw"
-                      priority
-                    />
-                  </div>
-                )}
-              </div>
             </div>
 
-            {/* Image info - separate section below images */}
-            <div className="absolute bottom-6 left-6 right-6 flex-shrink-0 px-6 pb-6 text-center border-t border-white/10">
-              <h3 className="text-white text-lg font-light mb-2">{artworks[selectedImage].title}</h3>
-              <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80 font-light">
+            <div className="flex items-center gap-2">
+              {artworks[selectedImage].detailImage && (
+                <button
+                  onClick={toggleDetails}
+                  className={`p-3 rounded-full transition-all duration-200 ${
+                    showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+                  aria-label={showDetails ? "Show main image" : "Show detail"}
+                >
+                  <Search size={18} />
+                </button>
+              )}
+              <button
+                onClick={closeLightbox}
+                className="p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* Main image container */}
+          <div className="w-full h-full flex items-center justify-center p-20">
+            <div className="relative max-w-full max-h-full">
+              <Image
+                src={
+                  showDetails && artworks[selectedImage].detailImage
+                    ? artworks[selectedImage].detailImage
+                    : artworks[selectedImage].image
+                }
+                alt={
+                  showDetails && artworks[selectedImage].detailImage
+                    ? `${artworks[selectedImage].title} - Detalj`
+                    : artworks[selectedImage].title
+                }
+                width={1200}
+                height={800}
+                className="max-w-full max-h-full object-contain"
+                priority
+                unoptimized
+              />
+            </div>
+          </div>
+
+          {/* Info panel */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <h3 className="text-white text-lg font-light mb-2 leading-tight">{artworks[selectedImage].title}</h3>
+              <div className="flex flex-wrap justify-center items-center gap-3 text-sm text-white/80 font-light mb-2">
                 <span>{artworks[selectedImage].year}</span>
-                {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
-                {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
+                {artworks[selectedImage].dimensions && (
+                  <>
+                    <span className="text-white/40">•</span>
+                    <span>{artworks[selectedImage].dimensions}</span>
+                  </>
+                )}
+                {artworks[selectedImage].photographer && (
+                  <>
+                    <span className="text-white/40">•</span>
+                    <span>Foto: {artworks[selectedImage].photographer}</span>
+                  </>
+                )}
               </div>
               {artworks[selectedImage].materials && (
-                <p className="text-white/60 text-sm font-light mt-1">{artworks[selectedImage].materials}</p>
+                <p className="text-white/70 text-sm font-light mb-1">{artworks[selectedImage].materials}</p>
               )}
               {artworks[selectedImage].description && (
-                <p className="text-white/70 text-sm font-light mt-2 max-w-2xl mx-auto">
-                  {artworks[selectedImage].description}
-                </p>
+                <p className="text-white/60 text-sm font-light">{artworks[selectedImage].description}</p>
               )}
             </div>
           </div>
