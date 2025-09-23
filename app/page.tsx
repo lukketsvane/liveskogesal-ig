@@ -2,12 +2,12 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Menu, X, ChevronLeft, ChevronRight, ZoomIn, Eye } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [showDetail, setShowDetail] = useState(false)
+  const [showDetails, setShowDetails] = useState(false)
 
   const artworks = [
     {
@@ -28,7 +28,7 @@ export default function Portfolio() {
       dimensions: "112 x 101 cm",
       materials: "Plantefarget garn, håndfarget garn, lin og nylon",
       photographer: "Øystein Thorvaldsen",
-      image: "/images/frosk.png",
+      image: "/images/eg-droymer.png",
       detailImage: "/images/detalj-egdroymer.png",
       aspectRatio: "1/1",
     },
@@ -39,7 +39,7 @@ export default function Portfolio() {
       dimensions: "105x119 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
-      image: "/images/som-bur-meg-large.jpeg",
+      image: "/images/som-bur-meg-gallery.jpeg",
       aspectRatio: "4/5",
     },
     {
@@ -61,8 +61,8 @@ export default function Portfolio() {
       dimensions: "45x45 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
-      description: "Billedveven er inspirert av Theodor Kittelsen og hans nøkken",
-      image: "/images/vannliljer-detail.png",
+      description: "Billedveven er inspirert av Theodor Kittelsen og hans nøkkel",
+      image: "/images/vannliljer-new.png",
       detailImage: "/images/detalj-vannlilje.png",
       aspectRatio: "1/1",
     },
@@ -76,36 +76,45 @@ export default function Portfolio() {
       detailImage: "/images/detalj-kyss-meg.png",
       aspectRatio: "1/1",
     },
+    {
+      id: 7,
+      title: "Frosk",
+      year: "2024",
+      dimensions: "Ukjent størrelse",
+      materials: "Plantefarget og håndfarget garn, nylon og lin",
+      image: "/images/frosk.png",
+      aspectRatio: "4/5",
+    },
   ]
 
   const openLightbox = (index: number) => {
     setSelectedImage(index)
-    setShowDetail(false)
+    setShowDetails(false)
     document.body.style.overflow = "hidden"
   }
 
   const closeLightbox = () => {
     setSelectedImage(null)
-    setShowDetail(false)
+    setShowDetails(false)
     document.body.style.overflow = "unset"
   }
 
   const nextImage = () => {
     if (selectedImage !== null) {
       setSelectedImage((selectedImage + 1) % artworks.length)
-      setShowDetail(false)
+      setShowDetails(false)
     }
   }
 
   const prevImage = () => {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === 0 ? artworks.length - 1 : selectedImage - 1)
-      setShowDetail(false)
+      setShowDetails(false)
     }
   }
 
-  const toggleDetail = () => {
-    setShowDetail(!showDetail)
+  const toggleDetails = () => {
+    setShowDetails(!showDetails)
   }
 
   return (
@@ -205,18 +214,16 @@ export default function Portfolio() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center">
-                        <div className="flex gap-3">
+                        <ZoomIn
+                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
+                          size={24}
+                        />
+                        {artwork.detailImage && (
                           <ZoomIn
                             className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
                             size={24}
                           />
-                          {artwork.detailImage && (
-                            <Eye
-                              className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
-                              size={24}
-                            />
-                          )}
-                        </div>
+                        )}
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
@@ -244,7 +251,7 @@ export default function Portfolio() {
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative aspect-square overflow-hidden bg-muted">
-                <Image src="/images/portrait-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
+                <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
                 <h2 className="text-4xl font-light text-foreground tracking-wide">Billedvev</h2>
@@ -412,72 +419,101 @@ export default function Portfolio() {
               <X size={24} />
             </button>
 
-            {/* Detail toggle button */}
+            {/* Detail toggle button - only show if artwork has detail image */}
             {artworks[selectedImage].detailImage && (
               <button
-                onClick={toggleDetail}
+                onClick={toggleDetails}
                 className={`absolute top-6 right-20 z-10 p-2 transition-all duration-200 ${
-                  showDetail ? "text-primary bg-primary/20" : "text-white/80 hover:text-white"
+                  showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white"
                 }`}
               >
-                <Eye size={24} />
+                <ZoomIn size={24} />
               </button>
             )}
 
-            {/* Navigation buttons */}
-            <button
-              onClick={prevImage}
-              className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
-            >
-              <ChevronLeft size={32} />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
-            >
-              <ChevronRight size={32} />
-            </button>
-
-            {/* Image container */}
-            <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
-              <div
-                className="relative w-full h-full max-w-full max-h-full transition-all duration-500 ease-out"
-                style={{ aspectRatio: artworks[selectedImage].aspectRatio }}
+            {/* Image container - takes remaining space */}
+            <div className="flex-1 flex items-center justify-center px-6 pb-6 min-h-0">
+              {/* Navigation buttons */}
+              <button
+                onClick={prevImage}
+                className="absolute left-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
               >
-                <Image
-                  src={
-                    showDetail && artworks[selectedImage].detailImage
-                      ? artworks[selectedImage].detailImage!
-                      : artworks[selectedImage].image || "/placeholder.svg"
-                  }
-                  alt={showDetail ? `Detail of ${artworks[selectedImage].title}` : artworks[selectedImage].title}
-                  fill
-                  className="object-contain transition-all duration-500 ease-out"
-                  sizes="90vw"
-                  priority
-                />
+                <ChevronLeft size={32} />
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-6 top-1/2 -translate-y-1/2 z-10 p-2 text-white/80 hover:text-white transition-colors duration-200"
+              >
+                <ChevronRight size={32} />
+              </button>
+
+              {/* Image display area */}
+              <div className="relative max-w-full max-h-full w-full h-full flex items-center justify-center">
+                {showDetails && artworks[selectedImage].detailImage ? (
+                  // Split view: main artwork and detail side by side
+                  <div className="flex gap-4 w-full h-full max-w-full max-h-full">
+                    <div className="flex-1 relative min-h-0">
+                      <div
+                        className="relative w-full h-full"
+                        style={{ aspectRatio: artworks[selectedImage].aspectRatio }}
+                      >
+                        <Image
+                          src={artworks[selectedImage].image || "/placeholder.svg"}
+                          alt={artworks[selectedImage].title}
+                          fill
+                          className="object-contain"
+                          sizes="45vw"
+                          priority
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1 relative min-h-0">
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={artworks[selectedImage].detailImage || "/placeholder.svg"}
+                          alt={`${artworks[selectedImage].title} - Detail`}
+                          fill
+                          className="object-contain"
+                          sizes="45vw"
+                          priority
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // Single view: main artwork only
+                  <div className="relative w-full h-full" style={{ aspectRatio: artworks[selectedImage].aspectRatio }}>
+                    <Image
+                      src={artworks[selectedImage].image || "/placeholder.svg"}
+                      alt={artworks[selectedImage].title}
+                      fill
+                      className="object-contain"
+                      sizes="90vw"
+                      priority
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Image info */}
-            <div className="absolute bottom-6 left-6 right-6 text-center">
-              <h3 className="text-white text-lg font-light mb-2">
-                {showDetail ? `Detalj: ${artworks[selectedImage].title}` : artworks[selectedImage].title}
-              </h3>
+            {/* Image info - separate section below images */}
+            <div className="flex-shrink-0 px-6 pb-6 text-center border-t border-white/10">
+              <h3 className="text-white text-lg font-light mb-2">{artworks[selectedImage].title}</h3>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80 font-light">
                 <span>{artworks[selectedImage].year}</span>
                 {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
                 {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
               </div>
+              {artworks[selectedImage].materials && (
+                <p className="text-white/60 text-sm font-light mt-1">{artworks[selectedImage].materials}</p>
+              )}
               {artworks[selectedImage].description && (
                 <p className="text-white/70 text-sm font-light mt-2 max-w-2xl mx-auto">
                   {artworks[selectedImage].description}
                 </p>
               )}
-              {artworks[selectedImage].detailImage && (
-                <p className="text-white/60 text-xs font-light mt-3">
-                  {showDetail ? "Klikk øye-ikonet for å se hele verket" : "Klikk øye-ikonet for å se detaljer"}
-                </p>
+              {showDetails && artworks[selectedImage].detailImage && (
+                <p className="text-primary/80 text-xs font-light mt-2">Viser detalj av vevarbeidet</p>
               )}
             </div>
           </div>
