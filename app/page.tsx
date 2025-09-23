@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Menu, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, ZoomIn, Eye } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [showDetail, setShowDetail] = useState(false)
 
   const artworks = [
     {
@@ -17,7 +18,8 @@ export default function Portfolio() {
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Vegard Kleven",
       image: "/images/slik-hjorten.jpeg",
-      aspectRatio: "4/5", // Portrait
+      detailImage: "/images/detalj-slik-hjorten.png",
+      aspectRatio: "4/5",
     },
     {
       id: 2,
@@ -26,8 +28,9 @@ export default function Portfolio() {
       dimensions: "112 x 101 cm",
       materials: "Plantefarget garn, håndfarget garn, lin og nylon",
       photographer: "Øystein Thorvaldsen",
-      image: "/images/eg-droymer.png",
-      aspectRatio: "1/1", // Square
+      image: "/images/frosk.png",
+      detailImage: "/images/detalj-egdroymer.png",
+      aspectRatio: "1/1",
     },
     {
       id: 3,
@@ -36,8 +39,8 @@ export default function Portfolio() {
       dimensions: "105x119 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
-      image: "/images/som-bur-meg-gallery.jpeg",
-      aspectRatio: "4/5", // Portrait
+      image: "/images/som-bur-meg-large.jpeg",
+      aspectRatio: "4/5",
     },
     {
       id: 4,
@@ -48,7 +51,8 @@ export default function Portfolio() {
       photographer: "Øystein Thorvaldsen",
       description: 'Billedveven er en studie av Harald Sohlbergs "Vinternatt i Rondane"',
       image: "/images/vinternatt-rondane.jpeg",
-      aspectRatio: "1/1", // Square
+      detailImage: "/images/detalj-vinternatt.png",
+      aspectRatio: "1/1",
     },
     {
       id: 5,
@@ -58,8 +62,9 @@ export default function Portfolio() {
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       photographer: "Øystein Thorvaldsen",
       description: "Billedveven er inspirert av Theodor Kittelsen og hans nøkken",
-      image: "/images/vannliljer-new.png",
-      aspectRatio: "1/1", // Square
+      image: "/images/vannliljer-detail.png",
+      detailImage: "/images/detalj-vannlilje.png",
+      aspectRatio: "1/1",
     },
     {
       id: 6,
@@ -68,62 +73,39 @@ export default function Portfolio() {
       dimensions: "58x56 cm",
       materials: "Plantefarget og håndfarget garn, nylon og lin",
       image: "/images/kyss-meg.jpeg",
-      aspectRatio: "1/1", // Square
-    },
-    {
-      id: 7,
-      title: "Textile Detail I",
-      year: "2024",
-      materials: "Plantefarget og håndfarget garn",
-      image: "/images/detail-1.jpeg",
-      aspectRatio: "3/2", // Landscape
-    },
-    {
-      id: 8,
-      title: "Textile Detail II",
-      year: "2024",
-      materials: "Plantefarget og håndfarget garn",
-      image: "/images/textile-detail-colorful.jpeg",
-      aspectRatio: "3/2", // Landscape
-    },
-    {
-      id: 9,
-      title: "Textile Detail III",
-      year: "2024",
-      materials: "Plantefarget og håndfarget garn",
-      image: "/images/textile-detail-blue.jpeg",
-      aspectRatio: "3/2", // Landscape
-    },
-    {
-      id: 10,
-      title: "Hands at Work",
-      year: "2024",
-      materials: "Plantefarget og håndfarget garn",
-      image: "/images/hands-weaving.jpeg",
-      aspectRatio: "3/2", // Landscape
+      detailImage: "/images/detalj-kyss-meg.png",
+      aspectRatio: "1/1",
     },
   ]
 
   const openLightbox = (index: number) => {
     setSelectedImage(index)
+    setShowDetail(false)
     document.body.style.overflow = "hidden"
   }
 
   const closeLightbox = () => {
     setSelectedImage(null)
+    setShowDetail(false)
     document.body.style.overflow = "unset"
   }
 
   const nextImage = () => {
     if (selectedImage !== null) {
       setSelectedImage((selectedImage + 1) % artworks.length)
+      setShowDetail(false)
     }
   }
 
   const prevImage = () => {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === 0 ? artworks.length - 1 : selectedImage - 1)
+      setShowDetail(false)
     }
+  }
+
+  const toggleDetail = () => {
+    setShowDetail(!showDetail)
   }
 
   return (
@@ -212,7 +194,7 @@ export default function Portfolio() {
                   className="group cursor-pointer break-inside-avoid mb-8"
                   onClick={() => openLightbox(index)}
                 >
-                  <div className="relative overflow-hidden rounded-sm bg-muted transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-primary/10">
+                  <div className="relative overflow-hidden bg-muted transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:shadow-primary/10">
                     <div className="relative w-full" style={{ aspectRatio: artwork.aspectRatio }}>
                       <Image
                         src={artwork.image || "/placeholder.svg"}
@@ -223,10 +205,18 @@ export default function Portfolio() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center">
-                        <ZoomIn
-                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
-                          size={24}
-                        />
+                        <div className="flex gap-3">
+                          <ZoomIn
+                            className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
+                            size={24}
+                          />
+                          {artwork.detailImage && (
+                            <Eye
+                              className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100"
+                              size={24}
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
@@ -235,6 +225,9 @@ export default function Portfolio() {
                       </h3>
                       <p className="text-white/80 text-xs font-light">{artwork.year}</p>
                       {artwork.dimensions && <p className="text-white/60 text-xs font-light">{artwork.dimensions}</p>}
+                      {artwork.detailImage && (
+                        <p className="text-white/60 text-xs font-light mt-1">Klikk for å se detaljer</p>
+                      )}
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
@@ -250,7 +243,7 @@ export default function Portfolio() {
         <section className="px-6 py-16 bg-secondary/30">
           <div className="max-w-6xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <div className="relative aspect-square rounded-sm overflow-hidden bg-muted">
+              <div className="relative aspect-square overflow-hidden bg-muted">
                 <Image src="/images/portrait-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
@@ -271,7 +264,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* About Section */}
         <section id="om-meg" className="px-6 py-16">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide">Arbeidsprosess</h2>
@@ -301,7 +293,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* CV Section */}
         <section id="cv" className="px-6 py-16 bg-secondary/30">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide">CV</h2>
@@ -403,7 +394,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* Footer */}
         <footer className="px-6 py-12 border-t border-border/50">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-sm text-muted-foreground font-light tracking-wide">© Live Skaar Skogesal</p>
@@ -422,6 +412,18 @@ export default function Portfolio() {
               <X size={24} />
             </button>
 
+            {/* Detail toggle button */}
+            {artworks[selectedImage].detailImage && (
+              <button
+                onClick={toggleDetail}
+                className={`absolute top-6 right-20 z-10 p-2 transition-all duration-200 ${
+                  showDetail ? "text-primary bg-primary/20" : "text-white/80 hover:text-white"
+                }`}
+              >
+                <Eye size={24} />
+              </button>
+            )}
+
             {/* Navigation buttons */}
             <button
               onClick={prevImage}
@@ -439,14 +441,18 @@ export default function Portfolio() {
             {/* Image container */}
             <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
               <div
-                className="relative w-full h-full max-w-full max-h-full"
+                className="relative w-full h-full max-w-full max-h-full transition-all duration-500 ease-out"
                 style={{ aspectRatio: artworks[selectedImage].aspectRatio }}
               >
                 <Image
-                  src={artworks[selectedImage].image || "/placeholder.svg"}
-                  alt={artworks[selectedImage].title}
+                  src={
+                    showDetail && artworks[selectedImage].detailImage
+                      ? artworks[selectedImage].detailImage!
+                      : artworks[selectedImage].image || "/placeholder.svg"
+                  }
+                  alt={showDetail ? `Detail of ${artworks[selectedImage].title}` : artworks[selectedImage].title}
                   fill
-                  className="object-contain"
+                  className="object-contain transition-all duration-500 ease-out"
                   sizes="90vw"
                   priority
                 />
@@ -455,7 +461,9 @@ export default function Portfolio() {
 
             {/* Image info */}
             <div className="absolute bottom-6 left-6 right-6 text-center">
-              <h3 className="text-white text-lg font-light mb-2">{artworks[selectedImage].title}</h3>
+              <h3 className="text-white text-lg font-light mb-2">
+                {showDetail ? `Detalj: ${artworks[selectedImage].title}` : artworks[selectedImage].title}
+              </h3>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-white/80 font-light">
                 <span>{artworks[selectedImage].year}</span>
                 {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
@@ -464,6 +472,11 @@ export default function Portfolio() {
               {artworks[selectedImage].description && (
                 <p className="text-white/70 text-sm font-light mt-2 max-w-2xl mx-auto">
                   {artworks[selectedImage].description}
+                </p>
+              )}
+              {artworks[selectedImage].detailImage && (
+                <p className="text-white/60 text-xs font-light mt-3">
+                  {showDetail ? "Klikk øye-ikonet for å se hele verket" : "Klikk øye-ikonet for å se detaljer"}
                 </p>
               )}
             </div>
