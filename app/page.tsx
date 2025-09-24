@@ -299,14 +299,12 @@ export default function Portfolio() {
 
         <section className="px-6 py-16 bg-secondary/30">
           <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div id="om-meg" className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="relative aspect-square overflow-hidden bg-muted">
                 <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
-                <h2 id="om-meg" className="text-4xl font-light text-foreground tracking-wide">
-                  Live Skogesal
-                </h2>
+                <h2 className="text-4xl font-light text-foreground tracking-wide">Live Skogesal</h2>
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
                   <p>
                     Jeg er en nyutdannet kunstner fra kunsthøgskolen i Bergen som bor og arbeider på Nordnes i Bergen. I
@@ -524,7 +522,7 @@ export default function Portfolio() {
               <button
                 onClick={toggleDetails}
                 className={`p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                  showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
+                  showDetails ? "text-primary" : "text-white/80 hover:text-white"
                 }`}
                 aria-label={showDetails ? "Show main image" : "Show detail"}
               >
