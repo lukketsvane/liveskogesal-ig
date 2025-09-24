@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Menu, X, ChevronLeft, ChevronRight, Search, Info } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, Info } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -177,7 +177,7 @@ export default function Portfolio() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-light text-foreground tracking-wider">LIVE SKAAR SKOGESAL</h1>
+            <h1 className="text-xl font-light text-foreground tracking-wider font-archivo">LIVE SKAAR SKOGESAL</h1>
 
             {/* Desktop Navigation - Per Finne style */}
             <nav className="hidden md:flex gap-12 text-sm font-light">
@@ -269,14 +269,19 @@ export default function Portfolio() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 ease-out flex items-center justify-center md:flex md:items-center md:justify-center">
-                        <Search
-                          className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100 md:relative absolute bottom-4 right-4 md:bottom-auto md:right-auto"
-                          size={20}
-                        />
+                        <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out transform scale-75 group-hover:scale-100 md:relative absolute bottom-4 right-4 md:bottom-auto md:right-auto">
+                          <Image
+                            src="/images/magnifying-glass-icon.png"
+                            alt="View artwork"
+                            width={20}
+                            height={20}
+                            className="filter invert brightness-0"
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 translate-y-full group-hover:translate-y-0 transition-all duration-500 ease-out">
-                      <h3 className="text-white text-sm font-light line-clamp-2 leading-relaxed mb-1 text-left">
+                      <h3 className="text-white text-sm font-light line-clamp-2 leading-relaxed mb-1 text-left font-archivo">
                         {artwork.title}
                       </h3>
                       <p className="text-white/80 text-xs font-light text-left">{artwork.year}</p>
@@ -286,7 +291,7 @@ export default function Portfolio() {
                     </div>
                   </div>
                   <div className="mt-4 space-y-1">
-                    <h3 className="text-sm font-light text-foreground line-clamp-2 leading-relaxed text-left">
+                    <h3 className="text-sm font-light text-foreground line-clamp-2 leading-relaxed text-left font-archivo">
                       {artwork.title}
                     </h3>
                     <p className="text-xs text-muted-foreground font-light text-left">{artwork.year}</p>
@@ -304,7 +309,7 @@ export default function Portfolio() {
                 <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
-                <h2 className="text-4xl font-light text-foreground tracking-wide">Live Skogesal</h2>
+                <h2 className="text-4xl font-light text-foreground tracking-wide font-archivo">Live Skogesal</h2>
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
                   <p>
                     Jeg er en nyutdannet kunstner fra kunsthøgskolen i Bergen som bor og arbeider på Nordnes i Bergen. I
@@ -323,7 +328,7 @@ export default function Portfolio() {
 
         <section className="px-6 py-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide">Arbeidsprosess</h2>
+            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide font-archivo">Arbeidsprosess</h2>
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
@@ -353,12 +358,14 @@ export default function Portfolio() {
 
         <section id="cv" className="px-6 py-16 bg-secondary/30">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide text-left">CV</h2>
+            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide text-left font-archivo">CV</h2>
 
             <div className="grid md:grid-cols-2 gap-16">
               <div className="space-y-12">
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">Utdannelse</h3>
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
+                    Utdannelse
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <p className="font-light text-foreground">Bachelor i Kunst</p>
@@ -376,7 +383,7 @@ export default function Portfolio() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
                     Utmerkelser og stipend
                   </h3>
                   <div className="space-y-4">
@@ -401,7 +408,7 @@ export default function Portfolio() {
 
               <div className="space-y-12">
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
                     Kommende utstillinger
                   </h3>
                   <div className="space-y-4">
@@ -425,7 +432,7 @@ export default function Portfolio() {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left">
+                  <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
                     Utvalgte utstillinger
                   </h3>
                   <div className="space-y-4">
@@ -521,12 +528,16 @@ export default function Portfolio() {
 
               <button
                 onClick={toggleDetails}
-                className={`p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
-                  showDetails ? "text-primary" : "text-white/80 hover:text-white"
-                }`}
+                className="p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label={showDetails ? "Show main image" : "Show detail"}
               >
-                <Search size={18} />
+                <Image
+                  src={showDetails ? "/images/ant-icon.png" : "/images/magnifying-glass-icon.png"}
+                  alt={showDetails ? "Show main image" : "Show detail"}
+                  width={18}
+                  height={18}
+                  className="filter invert brightness-0"
+                />
               </button>
             </div>
           )}
@@ -555,7 +566,7 @@ export default function Portfolio() {
 
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 md:p-6">
             <div className="max-w-4xl mx-auto">
-              <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left">
+              <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left font-archivo">
                 {artworks[selectedImage].title}
               </h3>
 

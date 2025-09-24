@@ -2,9 +2,16 @@ import type React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
+import { Archivo } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Live Skaar Skogesal - Billedvev | Kunstner Bergen",
@@ -109,7 +116,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${archivo.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
