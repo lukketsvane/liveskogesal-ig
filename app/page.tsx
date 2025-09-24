@@ -304,7 +304,9 @@ export default function Portfolio() {
                 <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
-                <h2 className="text-4xl font-light text-foreground tracking-wide">Live Skogesal</h2>
+                <h2 id="om-meg" className="text-4xl font-light text-foreground tracking-wide">
+                  Live Skogesal
+                </h2>
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
                   <p>
                     Jeg er en nyutdannet kunstner fra kunsthøgskolen i Bergen som bor og arbeider på Nordnes i Bergen. I
@@ -321,9 +323,10 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section id="om-meg" className="px-6 py-16">
+        <section className="px-6 py-16">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide">Arbeidsprosess</h2>
+
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
                 <p>
@@ -508,15 +511,26 @@ export default function Portfolio() {
           </div>
 
           {artworks[selectedImage].detailImage && (
-            <button
-              onClick={toggleDetails}
-              className={`fixed bottom-6 right-6 md:absolute md:top-4 md:right-20 md:bottom-auto p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center z-20 ${
-                showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
-              }`}
-              aria-label={showDetails ? "Show main image" : "Show detail"}
-            >
-              <Search size={18} />
-            </button>
+            <div className="fixed bottom-6 right-6 md:absolute md:top-4 md:right-20 md:bottom-auto flex items-center gap-2 z-20">
+              <button
+                onClick={toggleMobileInfo}
+                className="xs:hidden p-3 text-white/60 hover:text-white/80 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center bg-black/20 backdrop-blur-sm"
+                style={{ display: window.innerWidth <= 375 ? "flex" : "none" }}
+                aria-label={showMobileInfo ? "Hide details" : "Show details"}
+              >
+                <Info size={16} />
+              </button>
+
+              <button
+                onClick={toggleDetails}
+                className={`p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center ${
+                  showDetails ? "text-primary bg-primary/20" : "text-white/80 hover:text-white hover:bg-white/10"
+                }`}
+                aria-label={showDetails ? "Show main image" : "Show detail"}
+              >
+                <Search size={18} />
+              </button>
+            </div>
           )}
 
           <div className="w-full h-full flex items-center justify-center p-4 md:p-20">
@@ -547,16 +561,9 @@ export default function Portfolio() {
                 {artworks[selectedImage].title}
               </h3>
 
-              <div className="sm:hidden">
+              <div className="block" style={{ display: window.innerWidth <= 375 ? "block" : "none" }}>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-white/80 font-light">{artworks[selectedImage].year}</span>
-                  <button
-                    onClick={toggleMobileInfo}
-                    className="p-2 text-white/60 hover:text-white/80 transition-colors touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center"
-                    aria-label={showMobileInfo ? "Hide details" : "Show details"}
-                  >
-                    <Info size={16} />
-                  </button>
                 </div>
 
                 <div
@@ -587,7 +594,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              <div className="hidden sm:block">
+              <div className="block" style={{ display: window.innerWidth > 375 ? "block" : "none" }}>
                 <div className="flex flex-col gap-1 text-sm text-white/80 font-light mb-2">
                   <span>{artworks[selectedImage].year}</span>
                   {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
