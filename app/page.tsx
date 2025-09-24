@@ -4,12 +4,13 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
-import { Menu, X, ChevronLeft, ChevronRight, Search } from "lucide-react"
+import { Menu, X, ChevronLeft, ChevronRight, Search, Info } from "lucide-react"
 
 export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [showDetails, setShowDetails] = useState(false)
+  const [showMobileInfo, setShowMobileInfo] = useState(false)
 
   const touchStartX = useRef<number>(0)
   const touchStartY = useRef<number>(0)
@@ -79,12 +80,14 @@ export default function Portfolio() {
   const openLightbox = (index: number) => {
     setSelectedImage(index)
     setShowDetails(false)
+    setShowMobileInfo(false)
     document.body.style.overflow = "hidden"
   }
 
   const closeLightbox = () => {
     setSelectedImage(null)
     setShowDetails(false)
+    setShowMobileInfo(false)
     document.body.style.overflow = "unset"
   }
 
@@ -92,6 +95,7 @@ export default function Portfolio() {
     if (selectedImage !== null) {
       setSelectedImage((selectedImage + 1) % artworks.length)
       setShowDetails(false)
+      setShowMobileInfo(false)
     }
   }
 
@@ -99,11 +103,16 @@ export default function Portfolio() {
     if (selectedImage !== null) {
       setSelectedImage(selectedImage === 0 ? artworks.length - 1 : selectedImage - 1)
       setShowDetails(false)
+      setShowMobileInfo(false)
     }
   }
 
   const toggleDetails = () => {
     setShowDetails(!showDetails)
+  }
+
+  const toggleMobileInfo = () => {
+    setShowMobileInfo(!showMobileInfo)
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -537,17 +546,60 @@ export default function Portfolio() {
               <h3 className="text-white text-base md:text-lg font-light mb-2 leading-tight text-left">
                 {artworks[selectedImage].title}
               </h3>
-              <div className="flex flex-col gap-1 text-sm text-white/80 font-light mb-2">
-                <span>{artworks[selectedImage].year}</span>
-                {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
-                {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
+
+              <div className="sm:hidden">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-white/80 font-light">{artworks[selectedImage].year}</span>
+                  <button
+                    onClick={toggleMobileInfo}
+                    className="p-2 text-white/60 hover:text-white/80 transition-colors touch-manipulation min-w-[36px] min-h-[36px] flex items-center justify-center"
+                    aria-label={showMobileInfo ? "Hide details" : "Show details"}
+                  >
+                    <Info size={16} />
+                  </button>
+                </div>
+
+                <div
+                  className={`transition-all duration-300 ease-out overflow-hidden ${
+                    showMobileInfo ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="space-y-1 pt-2 border-t border-white/20">
+                    {artworks[selectedImage].dimensions && (
+                      <span className="block text-sm text-white/80 font-light">
+                        {artworks[selectedImage].dimensions}
+                      </span>
+                    )}
+                    {artworks[selectedImage].photographer && (
+                      <span className="block text-sm text-white/80 font-light">
+                        Foto: {artworks[selectedImage].photographer}
+                      </span>
+                    )}
+                    {artworks[selectedImage].materials && (
+                      <p className="text-white/70 text-sm font-light text-left">{artworks[selectedImage].materials}</p>
+                    )}
+                    {artworks[selectedImage].description && (
+                      <p className="text-white/60 text-sm font-light text-left">
+                        {artworks[selectedImage].description}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
-              {artworks[selectedImage].materials && (
-                <p className="text-white/70 text-sm font-light mb-1 text-left">{artworks[selectedImage].materials}</p>
-              )}
-              {artworks[selectedImage].description && (
-                <p className="text-white/60 text-sm font-light text-left">{artworks[selectedImage].description}</p>
-              )}
+
+              <div className="hidden sm:block">
+                <div className="flex flex-col gap-1 text-sm text-white/80 font-light mb-2">
+                  <span>{artworks[selectedImage].year}</span>
+                  {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
+                  {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
+                </div>
+                {artworks[selectedImage].materials && (
+                  <p className="text-white/70 text-sm font-light mb-1 text-left">{artworks[selectedImage].materials}</p>
+                )}
+                {artworks[selectedImage].description && (
+                  <p className="text-white/60 text-sm font-light text-left">{artworks[selectedImage].description}</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
