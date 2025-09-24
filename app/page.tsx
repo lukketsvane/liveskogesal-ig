@@ -295,7 +295,7 @@ export default function Portfolio() {
                 <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
-                <h2 className="text-4xl font-light text-foreground tracking-wide">Billedvev</h2>
+                <h2 className="text-4xl font-light text-foreground tracking-wide">Live Skogesal</h2>
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
                   <p>
                     Jeg er en nyutdannet kunstner fra kunsthøgskolen i Bergen som bor og arbeider på Nordnes i Bergen. I
@@ -449,8 +449,15 @@ export default function Portfolio() {
         </section>
 
         <footer className="px-6 py-12 border-t border-border/50">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-muted-foreground font-light tracking-wide">© Live Skaar Skogesal</p>
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground font-light">
+                <span>Instagram liveskogesal</span>
+                <span className="hidden md:inline">•</span>
+                <span>Email live9820@hotmail.com</span>
+              </div>
+              <p className="text-sm text-muted-foreground font-light tracking-wide">2025 © Live Skogesal</p>
+            </div>
           </div>
         </footer>
       </main>
@@ -541,14 +548,6 @@ export default function Portfolio() {
               {artworks[selectedImage].description && (
                 <p className="text-white/60 text-sm font-light text-left">{artworks[selectedImage].description}</p>
               )}
-            </div>
-          </div>
-
-          <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 md:hidden">
-            <div className="flex items-center gap-2 text-white/40 text-xs">
-              <ChevronLeft size={12} />
-              <span>Sveip for å navigere</span>
-              <ChevronRight size={12} />
             </div>
           </div>
         </div>
