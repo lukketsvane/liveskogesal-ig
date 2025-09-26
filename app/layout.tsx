@@ -6,6 +6,7 @@ import { Archivo } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
+import { LanguageProvider } from "@/contexts/language-context"
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -120,7 +121,9 @@ export default function RootLayout({
   return (
     <html lang="no">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${archivo.variable}`}>
-        <Suspense fallback={null}>{children}</Suspense>
+        <LanguageProvider>
+          <Suspense fallback={null}>{children}</Suspense>
+        </LanguageProvider>
         <Analytics />
         <script
           type="application/ld+json"
