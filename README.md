@@ -72,6 +72,4 @@ git commit -m "Lagt til nytt verk"
 git push origin main
 ```
 
-Sida oppdaterast automatisk.
-
-
+Sida oppdaterast 

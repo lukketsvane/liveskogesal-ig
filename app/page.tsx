@@ -5,8 +5,11 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Menu, X, ChevronLeft, ChevronRight, Info } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
+import { LanguageToggle } from "@/components/language-toggle"
 
 export default function Portfolio() {
+  const { t } = useLanguage()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [showDetails, setShowDetails] = useState(false)
@@ -178,7 +181,7 @@ export default function Portfolio() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-light text-foreground tracking-wider font-archivo">LIVE SKAAR SKOGESAL</h1>
+            <h1 className="text-xl font-light text-foreground tracking-wider font-archivo">{t("header.title")}</h1>
 
             {/* Desktop Navigation - Per Finne style */}
             <nav className="hidden md:flex gap-12 text-sm font-light">
@@ -186,19 +189,19 @@ export default function Portfolio() {
                 href="#prosjekter"
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
               >
-                Prosjekter
+                {t("nav.projects")}
               </a>
               <a
                 href="#om-meg"
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
               >
-                Om meg
+                {t("nav.about")}
               </a>
               <a
                 href="#cv"
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
               >
-                CV
+                {t("nav.cv")}
               </a>
             </nav>
 
@@ -227,21 +230,21 @@ export default function Portfolio() {
                 className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Prosjekter
+                {t("nav.projects")}
               </a>
               <a
                 href="#om-meg"
                 className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Om meg
+                {t("nav.about")}
               </a>
               <a
                 href="#cv"
                 className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
                 onClick={() => setIsMenuOpen(false)}
               >
-                CV
+                {t("nav.cv")}
               </a>
             </nav>
           </div>
@@ -310,17 +313,10 @@ export default function Portfolio() {
                 <Image src="/images/portrett-live.jpeg" alt="Live Skaar Skogesal" fill className="object-cover" />
               </div>
               <div className="space-y-8">
-                <h2 className="text-4xl font-light text-foreground tracking-wide font-archivo">Live Skogesal</h2>
+                <h2 className="text-4xl font-light text-foreground tracking-wide font-archivo">{t("about.title")}</h2>
                 <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
-                  <p>
-                    Jeg er en nyutdannet kunstner fra kunsthøgskolen i Bergen som bor og arbeider på Nordnes i Bergen. I
-                    min kunstneriske praksis jobber jeg med kunsthåndverk med hovedfokus på billedvev.
-                  </p>
-                  <p>
-                    Mine arbeider handler om hvordan historiske hendelser og fortellinger preger måten vi i dag ser på
-                    verden. Arbeidene tar for seg personlige erfaringer som gjennom et historisk blikk gjøres
-                    universelle og mer tilgjengelige.
-                  </p>
+                  <p>{t("about.intro")}</p>
+                  <p>{t("about.description")}</p>
                 </div>
               </div>
             </div>
@@ -329,29 +325,18 @@ export default function Portfolio() {
 
         <section className="px-6 py-16">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide font-archivo">Arbeidsprosess</h2>
+            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide font-archivo">
+              {t("process.title")}
+            </h2>
 
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
-                <p>
-                  Min arbeidsprosess starter med å male og planlegge motiv. Neste steg er å farge garn, både ved hjelp
-                  av historiske plantefargingsteknikker og moderne syrefarging. Deretter vever jeg bilder for hånd på
-                  oppstadvev.
-                </p>
-                <p>
-                  Dette er en tidkrevende prosess som gir tid til refleksjon. I mitt arbeid viderefører jeg kunnskap som
-                  har vært nedarvet gjennom titalls generasjoner. Dette er kunnskap som holder på å gå tapt.
-                </p>
+                <p>{t("process.paragraph1")}</p>
+                <p>{t("process.paragraph2")}</p>
               </div>
               <div className="space-y-6 text-muted-foreground leading-relaxed font-light">
-                <p>
-                  Når jeg vever melerer jeg garnet for å oppnå spill og kontraster i uttrykket. For å skape struktur i
-                  overflaten blander jeg inn andre materialer som glittergarn og blank viskose.
-                </p>
-                <p>
-                  Arbeidene tar for seg personlige erfaringer som gjennom et historisk blikk gjøres universelle og mer
-                  tilgjengelige.
-                </p>
+                <p>{t("process.paragraph3")}</p>
+                <p>{t("process.paragraph4")}</p>
               </div>
             </div>
           </div>
@@ -359,49 +344,51 @@ export default function Portfolio() {
 
         <section id="cv" className="px-6 py-16 bg-secondary/30">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide text-left font-archivo">CV</h2>
+            <h2 className="text-3xl font-light text-foreground mb-12 tracking-wide text-left font-archivo">
+              {t("cv.title")}
+            </h2>
 
             <div className="grid md:grid-cols-2 gap-16">
               <div className="space-y-12">
                 <div>
                   <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
-                    Utdannelse
+                    {t("cv.education")}
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="font-light text-foreground">Bachelor i Kunst</p>
-                      <p className="text-sm text-muted-foreground font-light">Universitetet i Bergen, 2020-2023</p>
+                      <p className="font-light text-foreground">{t("cv.education.bachelor")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.education.bachelor.school")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Årsstudium i litteraturvitenskap</p>
-                      <p className="text-sm text-muted-foreground font-light">Universitetet i Bergen, 2019-2020</p>
+                      <p className="font-light text-foreground">{t("cv.education.literature")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.education.literature.school")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Visuelle kunstfag</p>
-                      <p className="text-sm text-muted-foreground font-light">Kunstskolen i Bergen, 2017-2019</p>
+                      <p className="font-light text-foreground">{t("cv.education.visual")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.education.visual.school")}</p>
                     </div>
                   </div>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
-                    Utmerkelser og stipend
+                    {t("cv.awards")}
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="font-light text-foreground">"Årets beste kunstopplevelser 2024"</p>
-                      <p className="text-sm text-muted-foreground font-light">kunstavisen.no</p>
+                      <p className="font-light text-foreground">{t("cv.awards.best")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.awards.best.source")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Drømmestipendet 2024</p>
+                      <p className="font-light text-foreground">{t("cv.awards.dream")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Produksjonsstipend 2024</p>
-                      <p className="text-sm text-muted-foreground font-light">Buskerud kunstsenter</p>
+                      <p className="font-light text-foreground">{t("cv.awards.production")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.awards.production.source")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Årets Debutant</p>
-                      <p className="text-sm text-muted-foreground font-light">Novemberutstillingen 2023</p>
+                      <p className="font-light text-foreground">{t("cv.awards.debut")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.awards.debut.source")}</p>
                     </div>
                   </div>
                 </div>
@@ -410,54 +397,48 @@ export default function Portfolio() {
               <div className="space-y-12">
                 <div>
                   <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
-                    Kommende utstillinger
+                    {t("cv.upcoming")}
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="font-light text-foreground">Visningsrommet USF (separatutstilling)</p>
-                      <p className="text-sm text-muted-foreground font-light">Februar 2026</p>
+                      <p className="font-light text-foreground">{t("cv.upcoming.usf")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.upcoming.usf.date")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Skog Art Space (separatutstilling)</p>
-                      <p className="text-sm text-muted-foreground font-light">Mars 2026</p>
+                      <p className="font-light text-foreground">{t("cv.upcoming.skog")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.upcoming.skog.date")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Galleri Jessheim</p>
-                      <p className="text-sm text-muted-foreground font-light">Mai 2026</p>
+                      <p className="font-light text-foreground">{t("cv.upcoming.jessheim")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.upcoming.jessheim.date")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">SOFT galleri (separatutstilling)</p>
-                      <p className="text-sm text-muted-foreground font-light">Januar 2027</p>
+                      <p className="font-light text-foreground">{t("cv.upcoming.soft")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.upcoming.soft.date")}</p>
                     </div>
                   </div>
                 </div>
 
                 <div>
                   <h3 className="text-xl font-light text-foreground mb-6 tracking-wide text-left font-archivo">
-                    Utvalgte utstillinger
+                    {t("cv.selected")}
                   </h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="font-light text-foreground">Høstutstillingen</p>
-                      <p className="text-sm text-muted-foreground font-light">Kunstnernes hus, September 2025</p>
+                      <p className="font-light text-foreground">{t("cv.selected.autumn")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.selected.autumn.venue")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Østlandsutstillingen</p>
-                      <p className="text-sm text-muted-foreground font-light">
-                        Kunstbanken senter for samtidskunst, 2024
-                      </p>
+                      <p className="font-light text-foreground">{t("cv.selected.ostland")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.selected.ostland.venue")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">Second Skin; Encounters</p>
-                      <p className="text-sm text-muted-foreground font-light">Kode, 2023</p>
+                      <p className="font-light text-foreground">{t("cv.selected.secondskin")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.selected.secondskin.venue")}</p>
                     </div>
                     <div>
-                      <p className="font-light text-foreground">
-                        Kate Derum and Irene Davies International Tapestry Awards 2024
-                      </p>
-                      <p className="text-sm text-muted-foreground font-light">
-                        Australian Tapestry workshop, South Melbourne
-                      </p>
+                      <p className="font-light text-foreground">{t("cv.selected.tapestry")}</p>
+                      <p className="text-sm text-muted-foreground font-light">{t("cv.selected.tapestry.venue")}</p>
                     </div>
                   </div>
                 </div>
@@ -468,13 +449,18 @@ export default function Portfolio() {
 
         <footer className="px-6 py-12 border-t border-border/50">
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground font-light">
-                <span>Instagram liveskogesal</span>
-                <span className="hidden md:inline">•</span>
-                <span>Email live9820@hotmail.com</span>
+            <div className="flex items-end justify-between">
+              {/* Language toggle on the left */}
+              <div className="flex items-end">
+                <LanguageToggle />
               </div>
-              <p className="text-sm text-muted-foreground font-light tracking-wide">2025 © Live Skogesal</p>
+
+              {/* Contact info on the right */}
+              <div className="flex flex-col items-end gap-2 text-sm text-muted-foreground font-light">
+                <span>{t("footer.instagram")}</span>
+                <span>{t("footer.email")}</span>
+                <span className="tracking-wide">{t("footer.copyright")}</span>
+              </div>
             </div>
           </div>
         </footer>
@@ -492,14 +478,14 @@ export default function Portfolio() {
               <button
                 onClick={prevImage}
                 className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Previous image"
+                aria-label={t("lightbox.previous")}
               >
                 <ChevronLeft size={20} className="md:w-5 md:h-5" />
               </button>
               <button
                 onClick={nextImage}
                 className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Next image"
+                aria-label={t("lightbox.next")}
               >
                 <ChevronRight size={20} className="md:w-5 md:h-5" />
               </button>
@@ -509,7 +495,7 @@ export default function Portfolio() {
               <button
                 onClick={closeLightbox}
                 className="p-3 md:p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label="Close"
+                aria-label={t("lightbox.close")}
               >
                 <X size={20} className="md:w-5 md:h-5" />
               </button>
@@ -522,7 +508,7 @@ export default function Portfolio() {
                 onClick={toggleMobileInfo}
                 className="xs:hidden p-3 text-white/60 hover:text-white/80 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center bg-black/20 backdrop-blur-sm"
                 style={{ display: window.innerWidth <= 375 ? "flex" : "none" }}
-                aria-label={showMobileInfo ? "Hide details" : "Show details"}
+                aria-label={showMobileInfo ? t("lightbox.hideDetails") : t("lightbox.showDetails")}
               >
                 <Info size={16} />
               </button>
@@ -530,11 +516,11 @@ export default function Portfolio() {
               <button
                 onClick={toggleDetails}
                 className="p-3 rounded-full transition-all duration-200 touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center"
-                aria-label={showDetails ? "Show main image" : "Show detail"}
+                aria-label={showDetails ? t("lightbox.showMain") : t("lightbox.showDetail")}
               >
                 <Image
                   src={showDetails ? "/images/ant-icon.png" : "/images/magnifying-glass-icon.png"}
-                  alt={showDetails ? "Show main image" : "Show detail"}
+                  alt={showDetails ? t("lightbox.showMain") : t("lightbox.showDetail")}
                   width={18}
                   height={18}
                   className="filter invert brightness-0"
@@ -553,7 +539,7 @@ export default function Portfolio() {
                 }
                 alt={
                   showDetails && artworks[selectedImage].detailImage
-                    ? `${artworks[selectedImage].title} - Detalj`
+                    ? `${artworks[selectedImage].title} - ${t("lightbox.detail")}`
                     : artworks[selectedImage].title
                 }
                 width={1200}
@@ -589,7 +575,7 @@ export default function Portfolio() {
                     )}
                     {artworks[selectedImage].photographer && (
                       <span className="block text-sm text-white/80 font-light">
-                        Foto: {artworks[selectedImage].photographer}
+                        {t("lightbox.photo")} {artworks[selectedImage].photographer}
                       </span>
                     )}
                     {artworks[selectedImage].materials && (
@@ -608,7 +594,11 @@ export default function Portfolio() {
                 <div className="flex flex-col gap-1 text-sm text-white/80 font-light mb-2">
                   <span>{artworks[selectedImage].year}</span>
                   {artworks[selectedImage].dimensions && <span>{artworks[selectedImage].dimensions}</span>}
-                  {artworks[selectedImage].photographer && <span>Foto: {artworks[selectedImage].photographer}</span>}
+                  {artworks[selectedImage].photographer && (
+                    <span>
+                      {t("lightbox.photo")} {artworks[selectedImage].photographer}
+                    </span>
+                  )}
                 </div>
                 {artworks[selectedImage].materials && (
                   <p className="text-white/70 text-sm font-light mb-1 text-left">{artworks[selectedImage].materials}</p>
