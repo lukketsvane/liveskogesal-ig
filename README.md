@@ -1,30 +1,78 @@
-# Portfolio page design
+# liveskogesal.no
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Portfolioside for billedvevskunstnar Live Skaar Skogesal.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ltastefinger/v0-portfolio-page-design)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/OT61ePtNre8)
+## Tech stack
 
-## Overview
+- **Next.js 14** (App Router)
+- **TypeScript**
+- **Tailwind CSS** + **shadcn/ui**
+- **pnpm**
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Mappestruktur
+```
+
+app/           → Sider og layout
+components/    → React-komponentar
+lib/           → Hjelpefunksjonar
+public/images/ → Alle bilete (JPEG/PNG)
+styles/        → CSS
+
+```
+## Innhaldsendingar
+
+### Legge til nytt kunstverk
+
+1. Legg biletet i `public/images/` (bruk bindestrek, ikkje mellomrom: `mitt-nye-verk.jpeg`)
+2. Oppdater galleridataen i komponenten som viser kunstverk (truleg `components/gallery.tsx` eller liknande)
+3. Legg til eit nytt objekt:
+   ```ts
+   {
+     src: "/images/mitt-nye-verk.jpeg",
+     title: "Tittel på verket",
+     year: "2025",
+     dimensions: "100x120 cm"
+   }
+```
+
+### Fjerne kunstverk
+
+1. Slett objektet frå galleridataen
+1. (Valfritt) Slett biletet frå `public/images/`
+
+### Oppdatere tekst (Om meg, CV)
+
+Finn relevant komponent eller side i `app/` eller `components/` og endre teksten direkte.
+
+## Lokal utvikling
+
+```bash
+pnpm install    # Installer avhengigheiter (berre fyrste gong)
+pnpm dev        # Start lokal server på http://localhost:3000
+```
 
 ## Deployment
 
-Your project is live at:
+|Branch   |URL                                                           |Miljø     |
+|---------|--------------------------------------------------------------|----------|
+|`main`   |[liveskogesal.no](https://liveskogesal.no)                    |Produksjon|
+|`preview`|[liveskogesal.iverfinne.no](https://liveskogesal.iverfinne.no)|Test      |
 
-**[https://vercel.com/ltastefinger/v0-portfolio-page-design](https://vercel.com/ltastefinger/v0-portfolio-page-design)**
+### Workflow
 
-## Build your app
+1. **Test først**: Push endringar til `preview`-branch → sjekk på [liveskogesal.iverfinne.no](http://liveskogesal.iverfinne.no)
+1. **Produksjon**: Merge `preview` → `main` (eller push direkte til `main`)
+1. Vercel byggjer og deployer automatisk i løpet av ~1 min
 
-Continue building your app on:
+### Quick deploy (utan testing)
 
-**[https://v0.app/chat/projects/OT61ePtNre8](https://v0.app/chat/projects/OT61ePtNre8)**
+```bash
+git add .
+git commit -m "Lagt til nytt verk"
+git push origin main
+```
 
-## How It Works
+Sida oppdaterast automatisk.
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+```
+
