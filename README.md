@@ -74,5 +74,4 @@ git push origin main
 
 Sida oppdaterast automatisk.
 
-```
 
