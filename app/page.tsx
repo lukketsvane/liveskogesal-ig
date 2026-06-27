@@ -6,7 +6,8 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { Menu, X, ChevronLeft, ChevronRight, Info } from "lucide-react"
 import { useLanguage } from "@/contexts/language-context"
-import { LanguageToggle } from "@/components/language-toggle"
+import { Footer } from "@/components/footer"
+import { Updates } from "@/components/updates"
 
 export default function Portfolio() {
   const { t } = useLanguage()
@@ -192,6 +193,12 @@ export default function Portfolio() {
                 {t("nav.projects")}
               </a>
               <a
+                href="#oppdateringar"
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
+              >
+                {t("nav.updates")}
+              </a>
+              <a
                 href="#om-meg"
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
               >
@@ -231,6 +238,13 @@ export default function Portfolio() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.projects")}
+              </a>
+              <a
+                href="#oppdateringar"
+                className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.updates")}
               </a>
               <a
                 href="#om-meg"
@@ -305,6 +319,8 @@ export default function Portfolio() {
             </div>
           </div>
         </section>
+
+        <Updates />
 
         <section className="px-6 py-16 bg-secondary/30">
           <div className="max-w-6xl mx-auto">
@@ -447,23 +463,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <footer className="px-6 py-12 border-t border-border/50">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-end justify-between">
-              {/* Language toggle on the left */}
-              <div className="flex items-end">
-                <LanguageToggle />
-              </div>
-
-              {/* Contact info on the right */}
-              <div className="flex flex-col items-end gap-2 text-sm text-muted-foreground font-light">
-                <span>{t("footer.instagram")}</span>
-                <span>{t("footer.email")}</span>
-                <span className="tracking-wide">{t("footer.copyright")}</span>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </main>
 
       {selectedImage !== null && (

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://liveskogesal.com"),
+  metadataBase: new URL("https://liveskogesal.no"),
   alternates: {
     canonical: "/",
   },
@@ -55,24 +55,24 @@ export const metadata: Metadata = {
     title: "Live Skaar Skogesal - Billedvev | Kunstner Bergen",
     description:
       "Nyutdannet kunstner fra kunsthøgskolen i Bergen som arbeider med billedvev og kunsthåndverk. Håndvevde billedtepper med plantefarget garn og historiske teknikker.",
-    url: "https://liveskogesal.com",
+    url: "https://liveskogesal.no",
     siteName: "Live Skaar Skogesal",
     images: [
       {
-        url: "/images/portrett-live.jpeg",
+        url: "/images/og-image.jpg",
         width: 1200,
-        height: 1200,
+        height: 630,
         alt: "Live Skaar Skogesal - Billedvever og kunstner",
       },
     ],
-    locale: "no_NO",
+    locale: "nb_NO",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Live Skaar Skogesal - Billedvev | Kunstner Bergen",
     description: "Nyutdannet kunstner fra kunsthøgskolen i Bergen som arbeider med billedvev og kunsthåndverk.",
-    images: ["/images/portrett-live.jpeg"],
+    images: ["/images/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -96,8 +96,8 @@ export const metadata: Metadata = {
       name: "Live Skaar Skogesal",
       jobTitle: "Billedvever og Kunstner",
       description: "Nyutdannet kunstner fra kunsthøgskolen i Bergen som arbeider med billedvev og kunsthåndverk",
-      url: "https://liveskogesal.com",
-      image: "https://liveskogesal.com/images/portrett-live.jpeg",
+      url: "https://liveskogesal.no",
+      image: "https://liveskogesal.no/images/portrett-live.jpeg",
       sameAs: ["https://instagram.com/liveskogesal"],
       address: {
         "@type": "PostalAddress",
@@ -119,7 +119,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="no">
+    <html lang="nb">
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${archivo.variable}`}>
         <LanguageProvider>
           <Suspense fallback={null}>{children}</Suspense>
@@ -135,8 +135,8 @@ export default function RootLayout({
               jobTitle: "Billedvever og Kunstner",
               description:
                 "Nyutdannet kunstner fra kunsthøgskolen i Bergen som arbeider med billedvev og kunsthåndverk",
-              url: "https://liveskogesal.com",
-              image: "https://liveskogesal.com/images/portrett-live.jpeg",
+              url: "https://liveskogesal.no",
+              image: "https://liveskogesal.no/images/portrett-live.jpeg",
               sameAs: ["https://instagram.com/liveskogesal"],
               address: {
                 "@type": "PostalAddress",
