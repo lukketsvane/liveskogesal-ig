@@ -17,11 +17,11 @@ const translations = {
     "nav.projects": "Prosjekter",
     "nav.about": "Om meg",
     "nav.cv": "CV",
-    "nav.updates": "Oppdateringar",
+    "nav.updates": "Oppdateringer",
 
     // Updates section
-    "updates.title": "Oppdateringar",
-    "updates.loadMore": "Vis fleire",
+    "updates.title": "Oppdateringer",
+    "updates.loadMore": "Vis flere",
 
     // Header
     "header.title": "LIVE SKAAR SKOGESAL",

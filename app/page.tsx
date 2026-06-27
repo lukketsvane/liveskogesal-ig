@@ -193,16 +193,16 @@ export default function Portfolio() {
                 {t("nav.projects")}
               </a>
               <a
-                href="#oppdateringar"
-                className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
-              >
-                {t("nav.updates")}
-              </a>
-              <a
                 href="#om-meg"
                 className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
               >
                 {t("nav.about")}
+              </a>
+              <a
+                href="#oppdateringer"
+                className="text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
+              >
+                {t("nav.updates")}
               </a>
               <a
                 href="#cv"
@@ -240,18 +240,18 @@ export default function Portfolio() {
                 {t("nav.projects")}
               </a>
               <a
-                href="#oppdateringar"
-                className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("nav.updates")}
-              </a>
-              <a
                 href="#om-meg"
                 className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.about")}
+              </a>
+              <a
+                href="#oppdateringer"
+                className="block text-lg font-light text-muted-foreground hover:text-foreground transition-all duration-300 ease-out tracking-wide"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.updates")}
               </a>
               <a
                 href="#cv"
@@ -320,8 +320,6 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <Updates />
-
         <section className="px-6 py-16 bg-secondary/30">
           <div className="max-w-6xl mx-auto">
             <div id="om-meg" className="grid lg:grid-cols-2 gap-16 items-center">
@@ -338,6 +336,8 @@ export default function Portfolio() {
             </div>
           </div>
         </section>
+
+        <Updates />
 
         <section className="px-6 py-16">
           <div className="max-w-4xl mx-auto">
