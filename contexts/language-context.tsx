@@ -17,6 +17,11 @@ const translations = {
     "nav.projects": "Prosjekter",
     "nav.about": "Om meg",
     "nav.cv": "CV",
+    "nav.updates": "Oppdateringar",
+
+    // Updates section
+    "updates.title": "Oppdateringar",
+    "updates.loadMore": "Vis fleire",
 
     // Header
     "header.title": "LIVE SKAAR SKOGESAL",
@@ -100,6 +105,11 @@ const translations = {
     "nav.projects": "Projects",
     "nav.about": "About me",
     "nav.cv": "CV",
+    "nav.updates": "Updates",
+
+    // Updates section
+    "updates.title": "Updates",
+    "updates.loadMore": "Show more",
 
     // Header
     "header.title": "LIVE SKAAR SKOGESAL",
